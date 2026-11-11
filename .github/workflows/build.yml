@@ -3,6 +3,7 @@ name: Build Smart GIF Android App
 on:
   push:
     branches: [ "main", "master" ]
+    tags: [ "v*" ]
   pull_request:
     branches: [ "main", "master" ]
   workflow_dispatch:
@@ -68,4 +69,16 @@ jobs:
           fi
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "💡 상단의 **Artifacts** 탭에서 APK 파일을 다운로드하여 스마트폰에 바로 설치할 수 있습니다." >> $GITHUB_STEP_SUMMARY
+
+      - name: Create GitHub Release (when pushing tag v*)
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build-artifacts/*.apk
+          name: Smart GIF Maker ${{ github.ref_name }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
