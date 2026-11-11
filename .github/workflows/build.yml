@@ -1,0 +1,70 @@
+name: Build Smart GIF Android App
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Grant Execute Permission for Gradle Wrapper
+        run: chmod +x gradlew
+
+      - name: Build Debug & Release APK
+        run: ./gradlew assembleDebug assembleRelease --stacktrace
+
+      - name: Prepare APK Artifacts
+        run: |
+          mkdir -p build-artifacts
+          if [ -f app/build/outputs/apk/debug/app-debug.apk ]; then
+            cp app/build/outputs/apk/debug/app-debug.apk build-artifacts/SmartGIF-v1.0.0-debug.apk
+          fi
+          if [ -f app/build/outputs/apk/release/app-release.apk ]; then
+            cp app/build/outputs/apk/release/app-release.apk build-artifacts/SmartGIF-v1.0.0-release.apk
+          fi
+          ls -lh build-artifacts/
+
+      - name: Upload APKs to GitHub Actions Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: SmartGIF-Android-APKs
+          path: build-artifacts/*.apk
+          retention-days: 30
+
+      - name: Generate Build Summary
+        run: |
+          echo "### 🚀 Smart GIF 생성기 안드로이드 빌드 완료!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| 파일명 | 크기 | 설명 |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|---|" >> $GITHUB_STEP_SUMMARY
+          if [ -f build-artifacts/SmartGIF-v1.0.0-debug.apk ]; then
+            DEBUG_SIZE=$(du -h build-artifacts/SmartGIF-v1.0.0-debug.apk | cut -f1)
+            echo "| \`SmartGIF-v1.0.0-debug.apk\` | $DEBUG_SIZE | 디버그 빌드 (즉시 설치 가능) |" >> $GITHUB_STEP_SUMMARY
+          fi
+          if [ -f build-artifacts/SmartGIF-v1.0.0-release.apk ]; then
+            RELEASE_SIZE=$(du -h build-artifacts/SmartGIF-v1.0.0-release.apk | cut -f1)
+            echo "| \`SmartGIF-v1.0.0-release.apk\` | $RELEASE_SIZE | 릴리즈 빌드 (최적화 패키지) |" >> $GITHUB_STEP_SUMMARY
+          fi
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "💡 상단의 **Artifacts** 탭에서 APK 파일을 다운로드하여 스마트폰에 바로 설치할 수 있습니다." >> $GITHUB_STEP_SUMMARY

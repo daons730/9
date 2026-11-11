@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">스마트 GIF 생성기</string>
+    <string name="site_url">https://daons730.github.io/8/</string>
+    <string name="file_chooser_title">파일 선택</string>
+    <string name="permission_denied_notice">파일을 첨부하거나 GIF를 저장하려면 미디어 접근 권한이 필요합니다.</string>
+    <string name="download_started">GIF 다운로드를 시작합니다…</string>
+    <string name="download_complete">다운로드 완료: %1$s</string>
+    <string name="download_failed">다운로드에 실패했습니다.</string>
+    <string name="back_press_exit_prompt">한 번 더 누르면 앱이 종료됩니다.</string>
+    <string name="loading_message">스마트 GIF 생성기 불러오는 중…</string>
+    <string name="network_error_title">연결 오류</string>
+    <string name="network_error_msg">네트워크 연결 상태를 확인한 후 다시 시도해 주세요.</string>
+    <string name="retry">다시 시도</string>
+</resources>

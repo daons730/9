@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Film Frame / Container Card Background -->
+    <path
+        android:pathData="M32,26 h44 a10,10 0 0,1 10,10 v36 a10,10 0 0,1 -10,10 h-44 a10,10 0 0,1 -10,-10 v-36 a10,10 0 0,1 10,-10 z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:angle="45"
+                android:startColor="#F01E1B4B"
+                android:endColor="#F0312E81"
+                android:type="linear" />
+        </aapt:attr>
+    </path>
+
+    <!-- Glowing Frame Border -->
+    <path
+        android:strokeWidth="2.5"
+        android:pathData="M32,26 h44 a10,10 0 0,1 10,10 v36 a10,10 0 0,1 -10,10 h-44 a10,10 0 0,1 -10,-10 v-36 a10,10 0 0,1 10,-10 z">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:angle="45"
+                android:startColor="#38BDF8"
+                android:centerColor="#A855F7"
+                android:endColor="#F43F5E"
+                android:type="linear" />
+        </aapt:attr>
+    </path>
+
+    <!-- Film Sprocket Holes (Top) -->
+    <path
+        android:fillColor="#60CBD5E1"
+        android:pathData="M30,30h5v4h-5z M42,30h5v4h-5z M54,30h5v4h-5z M66,30h5v4h-5z M73,30h5v4h-5z" />
+
+    <!-- Film Sprocket Holes (Bottom) -->
+    <path
+        android:fillColor="#60CBD5E1"
+        android:pathData="M30,74h5v4h-5z M42,74h5v4h-5z M54,74h5v4h-5z M66,74h5v4h-5z M73,74h5v4h-5z" />
+
+    <!-- Looping Arrow Arc (Infinite motion / Loop badge) -->
+    <path
+        android:strokeWidth="2.2"
+        android:strokeCap="round"
+        android:fillColor="#00000000"
+        android:pathData="M54,40 C63,40 70,47 70,55 C70,63 63,70 54,70 C45,70 38,63 38,55 C38,48 43,42 50,40.5">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:angle="0"
+                android:startColor="#22D3EE"
+                android:endColor="#EC4899"
+                android:type="linear" />
+        </aapt:attr>
+    </path>
+
+    <!-- Loop Arrow Tip -->
+    <path
+        android:fillColor="#22D3EE"
+        android:pathData="M52,38 L48,42 L54,43.5 Z" />
+
+    <!-- "G" Letter -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M46,50 C46,47.5 44.5,46 41.5,46 C38.5,46 37,48 37,54.5 C37,61 38.5,63 41.5,63 C44,63 45.5,61.8 45.8,59 L42,59 L42,56 L49,56 L49,63.5 C47,65.5 44.5,66 41.5,66 C36.5,66 33.5,62.5 33.5,54.5 C33.5,46.5 36.5,43 41.5,43 C44.5,43 47,44.2 48.5,46.5 L46,50 Z" />
+
+    <!-- "I" Letter -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M52,43.5 h3.5 v22 h-3.5 z" />
+
+    <!-- "F" Letter -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M59,43.5 h11 v3 h-7.5 v6 h6.5 v3 h-6.5 v10 h-3.5 z" />
+
+    <!-- Smart Sparkle Star (Top Right) -->
+    <path
+        android:fillColor="#FACC15"
+        android:pathData="M81,21 C81,23 83,25 85,25 C83,25 81,27 81,29 C81,27 79,25 77,25 C79,25 81,23 81,21 Z" />
+
+    <!-- Mini Sparkle Star -->
+    <path
+        android:fillColor="#38BDF8"
+        android:pathData="M27,33 C27,34.5 28.5,36 30,36 C28.5,36 27,37.5 27,39 C27,37.5 25.5,36 24,36 C25.5,36 27,34.5 27,33 Z" />
+</vector>
