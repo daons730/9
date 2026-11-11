@@ -44,18 +44,48 @@ jobs:
 
       - name: Build Debug & Release APK
         run: |
-          ./gradlew assembleDebug --stacktrace
-          ./gradlew assembleRelease --stacktrace
+          echo "=== STARTING ASSEMBLE DEBUG ==="
+          ./gradlew assembleDebug --stacktrace 2>&1 | tee build_debug.log
+          DEBUG_EXIT=${PIPESTATUS[0]}
+          if [ $DEBUG_EXIT -ne 0 ]; then
+            echo "assembleDebug failed with exit code $DEBUG_EXIT"
+            exit $DEBUG_EXIT
+          fi
+
+          echo "=== STARTING ASSEMBLE RELEASE ==="
+          ./gradlew assembleRelease --stacktrace 2>&1 | tee build_release.log
+          RELEASE_EXIT=${PIPESTATUS[0]}
+          if [ $RELEASE_EXIT -ne 0 ]; then
+            echo "assembleRelease failed with exit code $RELEASE_EXIT"
+            exit $RELEASE_EXIT
+          fi
+
+      - name: Post Failure Log on Error
+        if: failure()
+        run: |
+          LOG_CONTENT=""
+          if [ -f build_debug.log ]; then
+            LOG_CONTENT=$(tail -n 80 build_debug.log)
+          fi
+          if [ -f build_release.log ]; then
+            LOG_CONTENT=$(tail -n 80 build_release.log)
+          fi
+          echo "### ❌ Build Failure Details" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          echo "$LOG_CONTENT" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          gh api "repos/${{ github.repository }}/commits/${{ github.sha }}/comments" \
+            -f body="### ❌ Build Failure Log
+          \`\`\`
+          $LOG_CONTENT
+          \`\`\`" || true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prepare APK Artifacts
         run: |
           mkdir -p build-artifacts
-          if [ -f app/build/outputs/apk/debug/app-debug.apk ]; then
-            cp app/build/outputs/apk/debug/app-debug.apk build-artifacts/SmartGIF-v1.0.0-debug.apk
-          fi
-          if [ -f app/build/outputs/apk/release/app-release.apk ]; then
-            cp app/build/outputs/apk/release/app-release.apk build-artifacts/SmartGIF-v1.0.0-release.apk
-          fi
+          find app/build/outputs/apk/ -name "*.apk" -exec cp {} build-artifacts/ \;
           ls -lh build-artifacts/
 
       - name: Upload APKs to GitHub Actions Artifacts
@@ -71,14 +101,13 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "| 파일명 | 크기 | 설명 |" >> $GITHUB_STEP_SUMMARY
           echo "|---|---|---|" >> $GITHUB_STEP_SUMMARY
-          if [ -f build-artifacts/SmartGIF-v1.0.0-debug.apk ]; then
-            DEBUG_SIZE=$(du -h build-artifacts/SmartGIF-v1.0.0-debug.apk | cut -f1)
-            echo "| \`SmartGIF-v1.0.0-debug.apk\` | $DEBUG_SIZE | 디버그 빌드 (즉시 설치 가능) |" >> $GITHUB_STEP_SUMMARY
-          fi
-          if [ -f build-artifacts/SmartGIF-v1.0.0-release.apk ]; then
-            RELEASE_SIZE=$(du -h build-artifacts/SmartGIF-v1.0.0-release.apk | cut -f1)
-            echo "| \`SmartGIF-v1.0.0-release.apk\` | $RELEASE_SIZE | 릴리즈 빌드 (최적화 패키지) |" >> $GITHUB_STEP_SUMMARY
-          fi
+          for f in build-artifacts/*.apk; do
+            if [ -f "$f" ]; then
+              SZ=$(du -h "$f" | cut -f1)
+              BN=$(basename "$f")
+              echo "| \`$BN\` | $SZ | 안드로이드 패키지 |" >> $GITHUB_STEP_SUMMARY
+            fi
+          done
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "💡 상단의 **Artifacts** 탭에서 APK 파일을 다운로드하여 스마트폰에 바로 설치할 수 있습니다." >> $GITHUB_STEP_SUMMARY
 
