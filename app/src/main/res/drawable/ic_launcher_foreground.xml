@@ -12,8 +12,8 @@
         <aapt:attr name="android:fillColor">
             <gradient
                 android:angle="45"
-                android:startColor="#F01E1B4B"
-                android:endColor="#F0312E81"
+                android:startColor="#1E1B4B"
+                android:endColor="#312E81"
                 android:type="linear" />
         </aapt:attr>
     </path>
@@ -21,41 +21,27 @@
     <!-- Glowing Frame Border -->
     <path
         android:strokeWidth="2.5"
-        android:pathData="M32,26 h44 a10,10 0 0,1 10,10 v36 a10,10 0 0,1 -10,10 h-44 a10,10 0 0,1 -10,-10 v-36 a10,10 0 0,1 10,-10 z">
-        <aapt:attr name="android:strokeColor">
-            <gradient
-                android:angle="45"
-                android:startColor="#38BDF8"
-                android:centerColor="#A855F7"
-                android:endColor="#F43F5E"
-                android:type="linear" />
-        </aapt:attr>
-    </path>
+        android:strokeColor="#A855F7"
+        android:fillColor="#00000000"
+        android:pathData="M32,26 h44 a10,10 0 0,1 10,10 v36 a10,10 0 0,1 -10,10 h-44 a10,10 0 0,1 -10,-10 v-36 a10,10 0 0,1 10,-10 z" />
 
     <!-- Film Sprocket Holes (Top) -->
     <path
-        android:fillColor="#60CBD5E1"
+        android:fillColor="#80CBD5E1"
         android:pathData="M30,30h5v4h-5z M42,30h5v4h-5z M54,30h5v4h-5z M66,30h5v4h-5z M73,30h5v4h-5z" />
 
     <!-- Film Sprocket Holes (Bottom) -->
     <path
-        android:fillColor="#60CBD5E1"
+        android:fillColor="#80CBD5E1"
         android:pathData="M30,74h5v4h-5z M42,74h5v4h-5z M54,74h5v4h-5z M66,74h5v4h-5z M73,74h5v4h-5z" />
 
-    <!-- Looping Arrow Arc (Infinite motion / Loop badge) -->
+    <!-- Looping Arrow Arc -->
     <path
         android:strokeWidth="2.2"
         android:strokeCap="round"
+        android:strokeColor="#22D3EE"
         android:fillColor="#00000000"
-        android:pathData="M54,40 C63,40 70,47 70,55 C70,63 63,70 54,70 C45,70 38,63 38,55 C38,48 43,42 50,40.5">
-        <aapt:attr name="android:strokeColor">
-            <gradient
-                android:angle="0"
-                android:startColor="#22D3EE"
-                android:endColor="#EC4899"
-                android:type="linear" />
-        </aapt:attr>
-    </path>
+        android:pathData="M54,40 C63,40 70,47 70,55 C70,63 63,70 54,70 C45,70 38,63 38,55 C38,48 43,42 50,40.5" />
 
     <!-- Loop Arrow Tip -->
     <path
@@ -87,4 +73,3 @@
         android:fillColor="#38BDF8"
         android:pathData="M27,33 C27,34.5 28.5,36 30,36 C28.5,36 27,37.5 27,39 C27,37.5 25.5,36 24,36 C25.5,36 27,34.5 27,33 Z" />
 </vector>
-
