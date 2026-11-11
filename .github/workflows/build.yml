@@ -43,7 +43,9 @@ jobs:
           fi
 
       - name: Build Debug & Release APK
-        run: ./gradlew assembleDebug assembleRelease --stacktrace
+        run: |
+          ./gradlew assembleDebug --stacktrace
+          ./gradlew assembleRelease --stacktrace
 
       - name: Prepare APK Artifacts
         run: |
