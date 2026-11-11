@@ -38,7 +38,7 @@
     <!-- Looping Arrow Arc -->
     <path
         android:strokeWidth="2.2"
-        android:strokeCap="round"
+        android:strokeLineCap="round"
         android:strokeColor="#22D3EE"
         android:fillColor="#00000000"
         android:pathData="M54,40 C63,40 70,47 70,55 C70,63 63,70 54,70 C45,70 38,63 38,55 C38,48 43,42 50,40.5" />
